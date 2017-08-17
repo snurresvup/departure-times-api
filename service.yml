@@ -1,0 +1,13 @@
+server:
+  applicationConnectors:
+    - type: http
+      idleTimeout: 60s
+
+jerseyClientConfiguration:
+  timeout: 60000ms
+
+logging:
+  level: INFO
+
+  loggers:
+    org.eclipse.jetty.servlets: DEBUG
