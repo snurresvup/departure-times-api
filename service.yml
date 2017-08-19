@@ -1,6 +1,7 @@
 server:
   applicationConnectors:
     - type: http
+      port: 8080
       idleTimeout: 60s
 
 jerseyClientConfiguration:
