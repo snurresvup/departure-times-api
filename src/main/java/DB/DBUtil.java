@@ -19,6 +19,10 @@ import java.util.stream.Collectors;
 
 public class DBUtil {
 
+  /**
+   * Responsible for populating the bus-stops collection in the mongoDB with data from tfl.
+   * @param client the client used for web communication with the tfl API
+   */
   public static void populateBusStopCollection(Client client){
     try {
       int requestNumber = 1;

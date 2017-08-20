@@ -12,6 +12,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A dummy db implementation, that uses a KML file with station info obtained from the tfl api
+ */
 public class DBSimple implements DB {
   private final String stationsJSONFile = "stations.json";
   private final String stationsURL = "https://data.tfl.gov.uk/tfl/syndication/feeds/stations.kml";
@@ -29,7 +32,6 @@ public class DBSimple implements DB {
       e.printStackTrace();
     }
 
-    System.out.println("Fetcing from file");
     return XMLUtil.getStationsFromKML(new File(stationsJSONFile));
   }
 
@@ -41,11 +43,18 @@ public class DBSimple implements DB {
         .collect(Collectors.toList());
   }
 
+  /**
+   * Not implemented, as it is not relevant for this DB implementation
+   */
   @Override
   public Station getStationById(String stationId) {
     return null;
   }
 
+  /**
+   * Not implemented, as it is not relevant for this DB implementation
+   * @return
+   */
   @Override
   public boolean busCollectionIsInitialized() {
     return true;

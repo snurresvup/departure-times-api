@@ -24,6 +24,12 @@ public class ClosestStationResource {
     this.db = db;
   }
 
+  /**
+   * Gets a list of all stations from the database and calculates the closest station to the provided latitude and longitude
+   * @param lat Latitude
+   * @param lng Longitude
+   * @return The closest station to the provided position
+   */
   @GET
   public Station getClosestStation(@QueryParam("lat") @NotNull Double lat, @QueryParam("lng") @NotNull Double lng){
     LatLng currentPos = new LatLng(lat, lng);

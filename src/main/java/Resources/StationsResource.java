@@ -20,6 +20,13 @@ public class StationsResource {
     this.db = db;
   }
 
+  /**
+   * Get a list of stations known to the system. If lat, lng and radius is provided, the endpoint will return a list of stations with a distance smaller than radius to the position (lat, lng).
+   * Otherwise the endpoint will return a list of all known stations.
+   * @param lat The latitude of the point to calculate from.
+   * @param lng The longitude of the point to calculate from.
+   * @param radius The radius of the circle to get stations within.
+   */
   @GET
   public List<Station> getStations(@QueryParam("lat") Double lat, @QueryParam("lng") Double lng, @QueryParam("radius") int radius){
     if(lat != null && lng != null){

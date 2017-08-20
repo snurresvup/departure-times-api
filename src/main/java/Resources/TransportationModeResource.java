@@ -23,6 +23,9 @@ public class TransportationModeResource {
     this.client = client;
   }
 
+  /**
+   * @return The list of possible transportation modes provided by tfl
+   */
   @GET
   public List<String> getDepartureTimes(){
     String res = client.target(Constants.API_ENDPOINT)

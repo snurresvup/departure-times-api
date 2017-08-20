@@ -17,6 +17,9 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
+/**
+ * Resource responsible for serving the endpoint providing arrival predictions by station name, or id
+ */
 @Path("/arrival-predictions")
 @Produces(MediaType.APPLICATION_JSON)
 public class ArrivalPredictionsResource {
@@ -32,6 +35,11 @@ public class ArrivalPredictionsResource {
     objectMapper = new ObjectMapper();
   }
 
+  /**
+   * Gets the arrival predictions of a given station id or station name
+   * @param stationName
+   * @param stationId
+   */
   @GET
   public Response getArrivalPredictions(@QueryParam("station") String stationName, @QueryParam("id") String stationId){
     if((stationName == null || stationName.isEmpty()) &&
@@ -43,21 +51,29 @@ public class ArrivalPredictionsResource {
       List<ArrivalPrediction> listOfPredictions = requestListOfPredictions(stationId);
       return Response.status(Response.Status.OK).entity(listOfPredictions).build();
     } else {
+
+      /*
+      Previously the method would lookup the id of the station name provided, and get the predictions by id, but currently
+      the method matches the name against a list of predictions from an other endpoint (see getInstantPredictions method)
+       */
       //Optional<Station> stopPointStationOpt = db.getListOfStations().stream().filter(s -> s.getName().equals(stationName)).findAny();
       //if (!stopPointStationOpt.isPresent()) return null;
-
       //Station stopPointStation = stopPointStationOpt.get();
-
       //String stopPointId = getStopPointId(stopPointStation);
+      //List<ArrivalPrediction> listOfPredictions = requestListOfPredictions(stopPointId);
+
 
       StreamingOutput stream = getInstantPredictions(stationName);
-
-      //List<ArrivalPrediction> listOfPredictions = requestListOfPredictions(stopPointId); //TODO
-
       return Response.ok(stream).build();
     }
   }
 
+  /**
+   * Fetches arrival predictions for the given stationName.
+   * (This method is no longer used, as the endpoint used at tfl does not provide info consistent with what is used by this system)
+   * @param stationName the name of the station
+   * @return A StreamingOutput of ArrivalPrediction json representations
+   */
   private StreamingOutput getInstantPredictions(String stationName) {
     try {
       InputStream inputStream = (new URL(Constants.COUNTDOWN_API_URL)).openStream();
@@ -104,6 +120,11 @@ public class ArrivalPredictionsResource {
     return result;
   }
 
+  /**
+   * Requests arrival predictions from the tfl API, and converts the data to a list of ArrivalPredictions
+   * @param stationId The stationID of the station to fetch information about
+   * @return List of ArrivalPrediction for the station
+   */
   private List<ArrivalPrediction> requestListOfPredictions(String stationId) {
     ObjectMapper objectMapper = new ObjectMapper();
     String res = client.target(Constants.API_ENDPOINT)
@@ -123,6 +144,11 @@ public class ArrivalPredictionsResource {
     return listOfPredictions;
   }
 
+  /**
+   * Fetches the StopPoint id, by making a search query to the tfl API with the station name
+   * @param stopPointStation
+   * @return The first ID returned by the tfl API when searched by the station name.
+   */
   private String getStopPointId(Station stopPointStation) {
     String res = RequestUtil.createTFLRequest(client, "/StopPoint/Search")
         .queryParam("query", stopPointStation.getName())
@@ -137,7 +163,6 @@ public class ArrivalPredictionsResource {
       StopPoint stopPoint = findClosestMatch(searchResult.getMatches(), stopPointStation);
       return stopPoint.getId();
     } catch (IOException e) {
-      System.out.println("Did we get it here" + e);
       e.printStackTrace();
     }
 
@@ -146,7 +171,7 @@ public class ArrivalPredictionsResource {
 
   /**
    *
-   * @param matches List of stoppoints to search among
+   * @param matches List of stop points to search among
    * @param station The station to match
    * @return The best matching station based on distance
    * @throws IllegalArgumentException if matches contains no elements or if station null.

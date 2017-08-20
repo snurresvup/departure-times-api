@@ -23,5 +23,8 @@ public interface DB {
    */
   Station getStationById(String stationId);
 
+  /**
+   * @return True if the bus-stop collection contains documents
+   */
   boolean busCollectionIsInitialized();
 }

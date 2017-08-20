@@ -42,6 +42,7 @@ public class DepartureTimesApplication extends Application<DepartureTimesConfigu
     environment.jersey().register(new StationsResource(departureTimesConfiguration.getDbFactory().createDBInstance(client)));
     environment.jersey().register(new ClosestStationResource(departureTimesConfiguration.getDbFactory().createDBInstance(client)));
 
+    //Populate the mongoDB bus-stops collection if empty
     if(!departureTimesConfiguration.getDbFactory().createDBInstance(client).busCollectionIsInitialized()) {
       DBUtil.populateBusStopCollection(client);
     }

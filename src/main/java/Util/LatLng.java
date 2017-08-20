@@ -1,5 +1,8 @@
 package Util;
 
+/**
+ * A utility class for representing a position by latitude and longitude
+ */
 public class LatLng {
   public static final double EARTH_RADIUS = 6371;
   private double latitude;
@@ -11,10 +14,21 @@ public class LatLng {
     this.longitude = longitude;
   }
 
+  /**
+   * Calculates the distance to other
+   * @param other The LatLng position to which to calculate the distance
+   * @return The distance to other in meters
+   */
   public double distanceTo(LatLng other){
     return distance(this, other);
   }
 
+  /**
+   * Calculates the distance to (lat, lng) from this
+   * @param lat Latitude
+   * @param lng Longitude
+   * @return The distance in meters
+   */
   public double distanceTo(double lat, double lng) {
     return distance(latitude, longitude, lat, lng);
   }
@@ -27,6 +41,12 @@ public class LatLng {
     return -90.00000 <= latitude && latitude <= 90.00000;
   }
 
+  /**
+   * Calculates the distance between ll1 and ll2 in meters
+   * @param ll1 position 1
+   * @param ll2 position 2
+   * @return The distance between position 1 and position 2 in meters
+   */
   public static double distance(LatLng ll1, LatLng ll2){
     return distance(ll1.latitude, ll1.longitude, ll2.latitude, ll2.longitude);
   }

@@ -21,15 +21,12 @@ import static com.mongodb.client.model.Filters.*;
 public class DBMongo implements DB {
 
   private final MongoDatabase database;
-  private final MongoClient mongoClient;
   private final Client client;
   private final MongoCollection<Document> busStopCollection;
   private final ObjectMapper objectMapper;
 
-
   public DBMongo(Client client, MongoClient mongoClient) {
     this.client = client;
-    this.mongoClient = mongoClient;
     database = mongoClient.getDatabase(Constants.DATABASE_NAME);
     busStopCollection = database.getCollection(Constants.BUS_STOPS_COLLECTION);
     objectMapper = new ObjectMapper();
@@ -37,6 +34,7 @@ public class DBMongo implements DB {
 
   @Override
   public List<Station> getListOfStations() {
+    //If the mongoDB is empty, fill it with data from the API
     if(busStopCollection.count() == 0){
       DBUtil.populateBusStopCollection(client);
     }
