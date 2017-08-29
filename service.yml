@@ -1,7 +1,9 @@
 server:
   applicationConnectors:
-    - type: http
+    - type: https
       port: 8080
+      keyStorePath: example.keystore
+      keyStorePassword: example
       idleTimeout: 60s
 
 jerseyClientConfiguration:
