@@ -15,7 +15,7 @@ Responds with a list of arrival predictions.
   - *station* - The station name to fetch arrival predictions for. (If the *id* parameter is provided the *station* parameter will be ignored.)
 - Example:
 ```shell
-$ curl http://178.62.31.37:8080/arrival-predictions\?id\=490005183E
+$ curl -k https://178.62.31.37:8080/arrival-predictions\?id\=490005183E
 ```
 - Response sample:
 ```json
@@ -60,7 +60,7 @@ Responds with the closest station to the provided position.
   - *lng* - Longitude
 - Example
 ```shell
-$ curl http://178.62.31.37:8080/closest-station\?lat\=51.517351\&lng\=-0.127758
+$ curl -k https://178.62.31.37:8080/closest-station\?lat\=51.517351\&lng\=-0.127758
 ```
 - Response sample:
 ```json
@@ -86,7 +86,7 @@ Responds with a list of stations within the defined circle, or all stations if n
   - *radius* - Maximum distance to (*lat*, *lng*)
 - Example
 ```shell
-$ curl http://178.62.31.37:8080/stations\?lat\=51.517351\&lng\=-0.127758\&radius\=80
+$ curl -k https://178.62.31.37:8080/stations\?lat\=51.517351\&lng\=-0.127758\&radius\=80
 ```
 - Response sample:
 ```json
@@ -132,7 +132,7 @@ Responds with a list of available transportation modes.
 - Query parameters: NONE
 - Example:
 ```shell
-$ curl http://178.62.31.37:8080/mode
+$ curl -k https://178.62.31.37:8080/mode
 ```
 - Response sample:
 ```json
