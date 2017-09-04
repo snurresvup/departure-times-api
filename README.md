@@ -2,7 +2,9 @@
 This repository provides a small middleware API for the [Transport for London Unified API](https://api.tfl.gov.uk/) API.
 The API is built with [Dropwizard.io](http://www.dropwizard.io/).
 
-The API is currently running at: http://178.62.31.37:8080
+The API is currently running at: https://178.62.31.37:8080
+
+The API uses a self signed certificate, which is why the -k flag is used in the curl commands below.
 
 ## Documentation
 All of the available API endpoints only respond to *GET* requests.
